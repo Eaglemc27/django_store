@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>My Django store</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+<div class="container">
+    {% include "header.html" %}
+
+    <div style="width: 20%; float:left;">
+        <ol class="list-unstyled" style="float:left">
+                <li>
+                  <label> Hello, {{ user.username }}</label>
+                </li>
+                <br>
+                <li>
+                    <button class="btn-lg">
+                        <a href="board_game">Board Game</a></button>
+                </li>
+                <br>
+            <li>
+                    <button class="btn-lg">
+                        <a href="video_game">Video Game</a></button>
+                </li>
+                <br>
+            <li>
+                    <button class="btn-lg">
+                        <a href="toy">Toy</a></button>
+                </li>
+                <br>
+        </ol>
+    </div>
+    <div id="content" style="width: 80%; float:right;">
+
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        $.ajax({
+            type : "GET",
+            url : "product_grid",
+            success : function searchSuccess(data, textStatus, jqXHR){
+                $('#content').html(data)
+            }
+        })
+    })
+</script>
+</body>
+</html>

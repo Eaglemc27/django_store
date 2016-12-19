@@ -1,0 +1,7 @@
+<div class="row">
+        {% for entity in entities %}
+            <div class="col-lg-3 " >
+                {% include "product_preview.html" with  entity=entity %}
+            </div>
+        {% endfor %}
+</div>

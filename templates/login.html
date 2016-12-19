@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<br>
+<form action="index" method="POST">
+    {% csrf_token %}
+    <ol class="list-unstyled">
+        <li>
+            <label for="username">Username: <input name="username"  type="text"></label>
+        </li>
+        <li>
+            <label for="password">Password: <input type="password" name="password" type="text"></label>
+        </li>
+        <li>
+            <button type="submit">Submit</button>
+        </li>
+    </ol>
+</form>
+</body>
+</html>

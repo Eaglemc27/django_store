@@ -1,0 +1,12 @@
+<h4>{{ entity.product.title }}</h4>
+<p>{{ entity.product.category }}</p>
+<p>Price: ${{ entity.product.price }}</p>
+<p>In Stock: {{ entity.product.in_stock }}</p>
+{% with entity.product.category.name|add:"_attrs.html" as template %}
+{% include template with entity=entity %}
+{% endwith %}
+<p>
+    <a class="btn btn-default"
+       href="products/{{ entity.product.id }}"
+       role="button">View details &raquo;</a>
+</p>

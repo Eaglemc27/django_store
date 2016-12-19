@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Board Games</title>
+</head>
+<body>
+<div class="container">
+
+    {% include "header.html" %}
+    <div style="display: inline;">
+        <div  style="width: 20%; float:left;">
+            <ol class="list-unstyled" style="float:left">
+            <li>
+                  <label> Hello, {{ user.username }}</label>
+                </li>
+                <br>
+                <li>
+                    <div class="well">
+                        <div id="compl_div" style="list-style-type: none;">
+                            {% csrf_token %}
+                            <p>Complexity</p>
+                            {% for complexity in complexities %}
+                                {% if complexity.complexity in cached_compl %}
+                                <label> <input type="checkbox" name="complexity" checked
+                                               value={{ complexity.complexity }}> {{ complexity.complexity }}</label>
+                                    {% else  %}
+                                    <label> <input type="checkbox" name="complexity"
+                                               value={{ complexity.complexity }}> {{ complexity.complexity }}</label>
+                                {% endif %}
+                                <br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+                <li>
+                     <div class="well">
+                        <div id="playing_div"   style="list-style-type: none;">
+                            {% csrf_token %}
+                            <p>Time</p>
+                            {% for playing_time in playing_times %}
+                                {% if playing_time.playing_time in cached_playing %}
+                                    <label> <input type="checkbox" name="playing_time" checked
+                                               value={{ playing_time.playing_time }}> {{ playing_time.playing_time }}</label>
+                                    {% else  %}
+                                <label> <input type="checkbox" name="playing_time"
+                                               value={{ playing_time.playing_time }}> {{ playing_time.playing_time }}</label>
+                                {% endif %}
+                                <br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </li>
+            <li>
+                <input class="btn" id="filters_btn" type="submit" value="Apply">
+            </li>
+            </ol>
+        </div>
+        <div id="content" style="width: 80%; float:right;">
+
+        </div>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+    $(window).ready(function () {
+        $.ajax({
+            type: "POST",
+            url: "product_grid",
+            data: {
+                    'complexity': get_complexities(),
+                    'playing_time' : get_playing_times()
+                },
+            success: function (data, textStatus, jqXHR) {
+                $('#content').html(data)
+            }
+        }
+        )
+
+        $("#filters_btn").on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                type: "POST",
+                url: "product_grid",
+                data: {
+                    'complexity': get_complexities(),
+                    'playing_time' : get_playing_times()
+
+                },
+                success: function (data, textStatus, jqXHR) {
+                    $('#content').html(data)
+    }
+            })
+        })
+    })
+</script>
+<script>
+    function get_complexities(){
+        var values = []
+          $("#compl_div").find(":checked").each(function(){
+                values.push($(this).val())
+            })
+        return values;
+    }
+    function get_playing_times(){
+        var values = []
+          $("#playing_div").find(":checked").each(function(){
+                values.push($(this).val())
+            })
+        return values;
+    }
+</script>
+</body>
+</html>
